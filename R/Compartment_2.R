@@ -35,7 +35,7 @@ par_2c <- function(data, time, conc) {
   R_squared <- 1 - (SS_residuals / SS_total)
 
   # Calculate AUC using the trapezoidal rule
-  auc <- sum(diff(data[[time]]) * (head(data$predicted_conc, -1) + tail(data$predicted_conc, -1)) / 2)
+  auc <- A/alpha + B/beta
 
   # Calculate pharmacokinetic parameters
   K21 <- (A*alpha+B*beta)/(A+B)
