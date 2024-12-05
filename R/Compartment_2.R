@@ -15,7 +15,7 @@
 #' @importFrom stats lm coef predict
 #' @importFrom utils head tail
 #' @export
-par_2c <- function(data, time, conc) {
+par_2c <- function(data, time, conc, dose) {
   data$conc <- data[[conc]]
   fit <- nls(conc ~ A * exp(-alpha * data[[time]]) + B * exp(-beta * data[[time]]),
              data = data,
@@ -43,16 +43,19 @@ par_2c <- function(data, time, conc) {
   K12 <- alpha + beta - K21 - K10
   V1 <- 1/(A+B)
   V2 <- (V1/K21)*K12
-  Vdss <- V1 + V2
   CL1 <- V1*K10
   CL2 <- V2*K12
   T_halph_alpha <- log(2)/alpha
   T_halph_beta <- log(2)/beta
+  Vc <- dose/(A+B)
+  CL <- dose/auc
+  Vdss <- Vc*(1 + K12/K21)
+  
 
   # Compile results into a data frame
   parameters <- data.frame(
     parameter = c("A", "alpha", "B", "beta", "R^2", "AUC", "K21", "K10",
-                  "K12", "V1", "V2", "Vdss", "CL1", "CL2", "T1/2 alpha", "T1/2 beta"),
+                  "K12", "V1", "V2", "Vdss", "CL1", "CL2", "T1/2 alpha", "T1/2 beta", "Vc", "CL", 'Vdss"),
     value = c(
       A,
       alpha,
@@ -69,7 +72,10 @@ par_2c <- function(data, time, conc) {
       CL1,
       CL2,
       T_halph_alpha,
-      T_halph_beta
+      T_halph_beta,
+      Vc,
+      CL,
+      Vdss
     )
   )
 
