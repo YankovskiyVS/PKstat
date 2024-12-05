@@ -37,6 +37,9 @@ par_2c <- function(data, time, conc, dose) {
   # Calculate AUC using the trapezoidal rule
   auc <- A/alpha + B/beta
 
+  AUMC <- (A/alpha^2) + (B/beta^2)
+  MRT <- AUMC/auc
+
   # Calculate pharmacokinetic parameters
   K21 <- (A*alpha+B*beta)/(A+B)
   K10 <- (alpha*beta)/K21
@@ -47,6 +50,7 @@ par_2c <- function(data, time, conc, dose) {
   CL2 <- V2*K12
   T_halph_alpha <- log(2)/alpha
   T_halph_beta <- log(2)/beta
+  T_halph <- MRT * log(2)
   Vc <- dose/(A+B)
   CL <- dose/auc
   Vdss <- Vc*(1 + K12/K21)
@@ -55,7 +59,8 @@ par_2c <- function(data, time, conc, dose) {
   # Compile results into a data frame
   parameters <- data.frame(
     parameter = c("A", "alpha", "B", "beta", "R^2", "AUC", "K21", "K10",
-                  "K12", "V1", "V2", "Vdss", "CL1", "CL2", "T1/2 alpha", "T1/2 beta", "Vc", "CL", "Vdss"),
+                  "K12", "V1", "V2", "CL1", "CL2", "T1/2 alpha", "T1/2 beta", "Vc", "CL", "Vdss",
+                 "T1/2"),
     value = c(
       A,
       alpha,
@@ -68,14 +73,14 @@ par_2c <- function(data, time, conc, dose) {
       K12,
       V1,
       V2,
-      Vdss,
       CL1,
       CL2,
       T_halph_alpha,
       T_halph_beta,
       Vc,
       CL,
-      Vdss
+      Vdss,
+      T_halph
     )
   )
 
