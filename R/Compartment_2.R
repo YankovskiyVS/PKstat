@@ -81,6 +81,7 @@ par_2c <- function(data, time, conc, dose) {
 
   return(parameters)
 }
+
 #' Regression model of the pharmacokinetics
 #' Use the model of 2 compartment
 #' @param data data frame, which include time and concentrations points
