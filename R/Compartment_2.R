@@ -55,7 +55,7 @@ par_2c <- function(data, time, conc, dose) {
   # Compile results into a data frame
   parameters <- data.frame(
     parameter = c("A", "alpha", "B", "beta", "R^2", "AUC", "K21", "K10",
-                  "K12", "V1", "V2", "Vdss", "CL1", "CL2", "T1/2 alpha", "T1/2 beta", "Vc", "CL", 'Vdss"),
+                  "K12", "V1", "V2", "Vdss", "CL1", "CL2", "T1/2 alpha", "T1/2 beta", "Vc", "CL", "Vdss"),
     value = c(
       A,
       alpha,
