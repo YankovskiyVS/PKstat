@@ -14,6 +14,7 @@
 #' @importFrom ggplot2 ggplot aes geom_point geom_line labs
 #' @importFrom stats lm coef predict
 #' @importFrom utils head tail
+#' @importFrom minpack.lm nlsLM
 #' @export
 par_2c <- function(data, time, conc, dose) {
   data$conc <- data[[conc]]
