@@ -21,7 +21,7 @@ par_2c <- function(data, time, conc, dose) {
   fit <- minpack.lm::nlsLM(conc ~ A*exp(-alpha*data[[time]]) + B*exp(-beta*data[[time]]),
                            data = data,
                            start = list(A = 9, B = 3, alpha = 0.6, beta = 0.2),
-                           control = list(maxiter = 600))
+                           control = list(maxiter = 200))
   A <- coef(fit)[1]
   B <- coef(fit)[2]
   alpha <- coef(fit)[3]
@@ -102,13 +102,14 @@ par_2c <- function(data, time, conc, dose) {
 #' @importFrom ggplot2 ggplot aes geom_point geom_line labs
 #' @importFrom stats lm coef predict
 #' @importFrom utils head tail
+#' @importFrom minpack.lm nlsLM
 #' @export
 graph_2c <- function(data, time, conc){
   data$conc <- data[[conc]]
-  fit <- nls(conc ~ A * exp(-alpha * data[[time]]) + B * exp(-beta *
-                                                               data[[time]]),
-             data = data,
-             start = list(A = 9, B = 3, alpha = 0.6, beta = 0.2))
+  fit <- minpack.lm::nlsLM(conc ~ A*exp(-alpha*data[[time]]) + B*exp(-beta*data[[time]]),
+                           data = data,
+                           start = list(A = 9, B = 3, alpha = 0.6, beta = 0.2),
+                           control = list(maxiter = 200))
 
   # Extract coefficients from the fitted model
   coef_fit <- coef(fit)
