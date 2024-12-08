@@ -19,7 +19,7 @@ graph_3c <- function(data, time, conc) {
   data$conc <- data[[conc]]
   fit <- minpack.lm::nlsLM(conc ~ A*exp(-alpha*data[[time]]) + B*exp(-beta*data[[time]]) + C*exp(-gamma*data[[time]]),
                            data = data,
-                           start = list(A=10, B=5, C=1, alpha=0.5, beta=0.1, gamma=0.01)
+                           start = list(A=10, B=5, C=1, alpha=0.5, beta=0.1, gamma=0.01),
                            control = list(maxiter = 200))
   A <- coef(fit)[1]
   B <- coef(fit)[2]
