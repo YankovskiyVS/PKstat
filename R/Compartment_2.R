@@ -17,9 +17,10 @@
 #' @export
 par_2c <- function(data, time, conc, dose) {
   data$conc <- data[[conc]]
-  fit <- nls(conc ~ A * exp(-alpha * data[[time]]) + B * exp(-beta * data[[time]]),
-             data = data,
-             start = list(A = 9, B = 3, alpha = 0.6, beta = 0.2))
+  fit <- minpack.lm::nlsLM(conc ~ A*exp(-alpha*data[[time]]) + B*exp(-beta*data[[time]]),
+                           data = data,
+                           start = list(A=10, B=5, alpha=0.5, beta=0.1),
+                           control = list(maxiter = 200))
   A <- coef(fit)[1]
   B <- coef(fit)[2]
   alpha <- coef(fit)[3]
